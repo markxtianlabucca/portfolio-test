@@ -620,10 +620,10 @@ body.loader-active {
    ================================ */
 .hero {
     position: relative;
-    min-height: 100svh;
+    min-height: 100vh;
     display: flex;
     align-items: center;
-    padding-top: 80px;
+    padding-top: 100px;
     overflow: hidden;
 }
 
@@ -2447,10 +2447,6 @@ body.loader-active {
 
     .nav-toggle.active span:nth-child(3) {
         transform: rotate(-45deg) translate(6px, -6px);
-    }
-
-    .hero{
-        overflow: visible;
     }
 
     .hero-title {
