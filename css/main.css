@@ -758,7 +758,6 @@ body.loader-active {
     display: flex;
     align-items: center;
     justify-content: center;
-    overflow: hidden;
 }
 
 .hero-image-container {
@@ -2448,6 +2447,10 @@ body.loader-active {
 
     .nav-toggle.active span:nth-child(3) {
         transform: rotate(-45deg) translate(6px, -6px);
+    }
+
+    .hero{
+        overflow: visible;
     }
 
     .hero-title {
