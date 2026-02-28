@@ -1,23 +1,4 @@
 // ================================
-// TIMEZONE CONFIGURATION
-// ================================
-// IMPORTANT: Change this to customize the timezone displayed on your site
-// The time will ALWAYS show YOUR timezone, not the visitor's timezone
-//
-// Common timezone examples:
-//   'Asia/Manila'        - Philippines
-//   'America/New_York'   - US Eastern Time
-//   'America/Los_Angeles'- US Pacific Time
-//   'Europe/London'      - UK
-//   'Asia/Tokyo'         - Japan
-//   'Australia/Sydney'   - Australia
-//
-// Full list: https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
-// ================================
-
-const MY_TIMEZONE = 'Asia/Manila';  // ← CHANGE THIS TO YOUR TIMEZONE
-
-// ================================
 // main.js — Shared across: home.html, about.html, contact.html
 //
 // CHANGES FROM ORIGINAL:
@@ -31,7 +12,6 @@ const MY_TIMEZONE = 'Asia/Manila';  // ← CHANGE THIS TO YOUR TIMEZONE
 //  [CLEAN] All commented-out dead code blocks removed
 //  [CLEAN] Cursor code isolated at the top — ready to extract to cursor.js
 //         (see AUDIT_REPORT.md §9 for extraction instructions)
-//  [CONFIG] Timezone configuration added at top for easy customization
 // ================================
 
 // ================================
@@ -242,12 +222,9 @@ document.querySelector('.nav-cta')?.addEventListener('click', () => {
     navToggle.classList.remove('active');
 });
 
-window.addEventListener('scroll', () => {
-    if (navbar) {
-        navbar.classList.toggle('scrolled', window.scrollY > 50);
-    }
-}, { passive: true });
-
+// ================================
+// Smooth scrolling for anchor links
+// ================================
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         const href = this.getAttribute('href');
@@ -255,256 +232,320 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             e.preventDefault();
             const target = document.querySelector(href);
             if (target) {
-                window.scrollTo({
-                    top: target.offsetTop - 80,
-                    behavior: 'smooth'
-                });
+                window.scrollTo({ top: target.offsetTop - 80, behavior: 'smooth' });
             }
         }
     });
 });
 
+// ================================
+// Active nav link — page-based detection
+// ================================
 function getCurrentPage() {
-    const path = window.location.pathname;
-    const page = path.split('/').pop() || 'home.html';
-    return page;
+    return window.location.pathname.split('/').pop() || 'home.html';
 }
 
 function setActiveNavLink() {
     const currentPage = getCurrentPage();
     navLinks.forEach(link => {
         const href = link.getAttribute('href');
-        link.classList.remove('active');
-        if (href === currentPage ||
+        link.classList.toggle('active',
+            href === currentPage ||
             (currentPage === '' && href === 'home.html') ||
-            (currentPage === '/' && href === 'home.html')) {
-            link.classList.add('active');
-        }
+            (currentPage === '/' && href === 'home.html')
+        );
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    setActiveNavLink();
-});
+document.addEventListener('DOMContentLoaded', setActiveNavLink);
 
-const sections = document.querySelectorAll('section[id]');
-const currentPage = getCurrentPage();
+// ================================
+// Unified rAF-throttled scroll handler
+// Replaces 4 separate scroll listeners — PERF improvement
+// ================================
+const heroContent  = document.querySelector('.hero-content');
+const backToTopBtn = document.getElementById('backToTop');
+const sections     = document.querySelectorAll('section[id]');
+const isHomePage   = ['home.html', '', '/'].includes(getCurrentPage());
 
-if (currentPage === 'home.html' || currentPage === '' || currentPage === '/') {
-    function highlightNavigation() {
-        const scrollY = window.pageYOffset;
+let scrollPending = false;
+
+function handleScroll() {
+    const scrollY = window.pageYOffset;
+
+    // 1. Navbar shadow
+    navbar?.classList.toggle('scrolled', scrollY > 50);
+
+    // 2. Back-to-top visibility
+    backToTopBtn?.classList.toggle('show', scrollY > 300);
+
+    // 3. Hero parallax (home page only, and only above the fold)
+    if (heroContent && scrollY < window.innerHeight) {
+        heroContent.style.transform = `translateY(${scrollY * 0.3}px)`;
+        heroContent.style.opacity   = String(Math.max(0, 1 - scrollY / 500));
+    }
+
+    // 4. Section-based nav highlighting (home page only)
+    if (isHomePage) {
         let currentSection = '';
-        let found = false;
-
         sections.forEach(section => {
-            const sectionTop = section.offsetTop - 150;
-            const sectionHeight = section.offsetHeight;
-            const sectionBottom = sectionTop + sectionHeight;
-
-            if (scrollY >= sectionTop && scrollY < sectionBottom) {
-                currentSection = section.getAttribute('id');
-                found = true;
-            }
+            const top    = section.offsetTop - 150;
+            const bottom = top + section.offsetHeight;
+            if (scrollY >= top && scrollY < bottom) currentSection = section.id;
         });
-
-        if (!found && sections.length > 0) {
-            const lastSection = sections[sections.length - 1];
-            currentSection = lastSection.getAttribute('id');
+        if (!currentSection && sections.length) {
+            currentSection = sections[sections.length - 1].id;
         }
-
         navLinks.forEach(link => {
             const href = link.getAttribute('href');
             if (href.startsWith('#')) {
                 link.classList.toggle('active', href === `#${currentSection}`);
             }
         });
-
-        const homeLink = document.querySelector('.nav-link[href="home.html"]');
-        if (homeLink && !currentSection) {
-            homeLink.classList.add('active');
-        }
+        // Keep Home link active on home page
+        document.querySelector('.nav-link[href="home.html"]')?.classList.add('active');
     }
-
-    window.addEventListener('scroll', highlightNavigation, { passive: true });
 }
 
-// ================================
-// [PERF] Consolidated scroll event handler
-// Replaces multiple individual scroll handlers with one rAF-throttled loop
-// Improves performance by batching scroll-dependent work
-// ================================
-let ticking = false;
-
-function onScroll() {
-    if (ticking) return;
-    ticking = true;
-
-    requestAnimationFrame(() => {
-        const scrollY = window.pageYOffset;
-
-        // — Back to top button —
-        const backToTopBtn = document.getElementById('backToTop');
-        if (backToTopBtn) {
-            backToTopBtn.classList.toggle('show', scrollY > 300);
-        }
-
-        // — Scroll animations —
-        const animatedElements = document.querySelectorAll('.animate-on-scroll');
-        animatedElements.forEach(el => {
-            const rect = el.getBoundingClientRect();
-            const isVisible = rect.top < (window.innerHeight - 100);
-            el.classList.toggle('visible', isVisible);
+window.addEventListener('scroll', () => {
+    if (!scrollPending) {
+        scrollPending = true;
+        requestAnimationFrame(() => {
+            handleScroll();
+            scrollPending = false;
         });
+    }
+}, { passive: true });
 
-        ticking = false;
-    });
-}
-
-window.addEventListener('scroll', onScroll, { passive: true });
-
-// ================================
-// Back to top button
-// ================================
-const backToTopBtn = document.getElementById('backToTop');
+// Back-to-top click
 backToTopBtn?.addEventListener('click', () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// ================================
+// Intersection Observer — fade-in animations
+// ================================
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity   = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, observerOptions);
+
+document.querySelectorAll('.project-card, .tech-item, .stat-item').forEach(el => {
+    el.style.opacity   = '0';
+    el.style.transform = 'translateY(30px)';
+    el.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+    observer.observe(el);
+});
+
+document.querySelectorAll('.process-step').forEach((step, index) => {
+    step.style.opacity   = '0';
+    step.style.transform = 'translateX(-30px)';
+    step.style.transition = `opacity 0.6s ease-out ${index * 0.1}s, transform 0.6s ease-out ${index * 0.1}s`;
+    observer.observe(step);
+});
+
+// ================================
+// Contact card animations
+// FIX: was using `observer` (wrong ref), now correctly uses `observers`
+// ================================
+const observersOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+};
+
+const observers = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.style.opacity   = '1';
+            entry.target.style.transform = 'translateY(0)';
+        }
+    });
+}, observersOptions);
+
+document.querySelectorAll('.availability-card, .contact-methods-card, .social-card, .form-card').forEach(card => {
+    card.style.opacity   = '0';
+    card.style.transform = 'translateY(30px)';
+    card.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+    observers.observe(card); // FIX: was `observer.observe(card)` — wrong reference
+});
+
+// ================================
+// Proficiency bar animations
+// ================================
+const proficiencyObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const fill = entry.target;
+            fill.style.setProperty('--proficiency-width', fill.getAttribute('data-proficiency') + '%');
+            fill.classList.add('animate');
+            proficiencyObserver.unobserve(fill);
+        }
+    });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.proficiency-fill').forEach(bar => proficiencyObserver.observe(bar));
+
+// ================================
+// Project Filtering with Auto-Sort
+// ================================
+const filterChips   = document.querySelectorAll('.filter-chip');
+const projectsGrid  = document.querySelector('.projects-grid');
+const noResults     = document.getElementById('noResults');
+let allProjects     = [];
+
+document.addEventListener('DOMContentLoaded', () => {
+    allProjects = Array.from(document.querySelectorAll('.project-card'));
+});
+
+window.addEventListener('load', () => {
+    if (allProjects.length === 0) {
+        allProjects = Array.from(document.querySelectorAll('.project-card'));
+    }
+    filterProjects('featured');
+});
+
+function sortProjectsByDate(projects) {
+    return [...projects].sort((a, b) =>
+        new Date(b.getAttribute('data-date')) - new Date(a.getAttribute('data-date'))
+    );
+}
+
+function filterProjects(filter) {
+    if (allProjects.length === 0) {
+        allProjects = Array.from(document.querySelectorAll('.project-card'));
+    }
+
+    let projectsToShow = allProjects;
+    if (filter === 'featured') {
+        projectsToShow = allProjects.filter(c => c.getAttribute('data-featured') === 'true');
+    } else if (filter !== 'all') {
+        projectsToShow = allProjects.filter(c => c.getAttribute('data-category')?.includes(filter));
+    }
+
+    const recentProjects = sortProjectsByDate(projectsToShow).slice(0, 6);
+
+    // Clean up all cards
+    allProjects.forEach(card => {
+        card.classList.remove('fade-in', 'fade-out', 'hidden');
+        card.style.animationDelay = '';
+        card.style.opacity = '';
+        card.style.transform = '';
+    });
+
+    if (projectsGrid) void projectsGrid.offsetHeight; // force reflow once
+
+    allProjects.forEach(card => card.classList.add('fade-out'));
+
+    setTimeout(() => {
+        if (!projectsGrid) return;
+        projectsGrid.innerHTML = '';
+
+        if (recentProjects.length === 0) {
+            if (noResults) noResults.style.display = 'block';
+            return;
+        }
+        if (noResults) noResults.style.display = 'none';
+
+        recentProjects.forEach((card, index) => {
+            card.classList.remove('fade-out', 'hidden');
+            card.style.animationDelay = '';
+            void card.offsetHeight;
+            card.classList.add('fade-in');
+            card.style.animationDelay = `${index * 0.1}s`;
+            projectsGrid.appendChild(card);
+        });
+
+        const totalTime = ((recentProjects.length - 1) * 0.1 + 0.5) * 1000;
+        setTimeout(() => {
+            recentProjects.forEach(card => {
+                card.classList.remove('fade-in');
+                card.style.animationDelay = '';
+            });
+        }, totalTime);
+    }, 300);
+}
+
+filterChips.forEach(chip => {
+    chip.addEventListener('click', function () {
+        filterChips.forEach(c => c.classList.remove('active'));
+        this.classList.add('active');
+        filterProjects(this.getAttribute('data-filter'));
+    });
 });
 
 // ================================
 // Animated Counter for Stats
 // ================================
 function animateCounter(element, target, duration = 2000, suffix = '+') {
-    let startTimestamp = null;
-    const start = 0;
     const end = parseInt(target);
+    let startTimestamp = null;
 
     const step = (timestamp) => {
         if (!startTimestamp) startTimestamp = timestamp;
         const progress = Math.min((timestamp - startTimestamp) / duration, 1);
-        const easeOutQuart = 1 - Math.pow(1 - progress, 4);
-        const current = Math.floor(easeOutQuart * (end - start) + start);
-
-        element.textContent = current + suffix;
-
-        if (progress < 1) {
-            window.requestAnimationFrame(step);
-        } else {
-            element.textContent = target;
-        }
+        const eased    = 1 - Math.pow(1 - progress, 4);
+        element.textContent = Math.floor(eased * end) + suffix;
+        if (progress < 1) requestAnimationFrame(step);
+        else element.textContent = target;
     };
 
-    window.requestAnimationFrame(step);
+    requestAnimationFrame(step);
 }
 
 const statObserver = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
         if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
-            const target = entry.target.textContent;
             entry.target.classList.add('counted');
-            animateCounter(entry.target, target);
+            animateCounter(entry.target, entry.target.textContent);
         }
     });
 }, { threshold: 0.5 });
 
-document.querySelectorAll('.stat-number').forEach(stat => {
-    statObserver.observe(stat);
-});
+document.querySelectorAll('.stat-number').forEach(stat => statObserver.observe(stat));
 
 // ================================
-// Project Filtering with Auto-Sort
+// Technology Toggle
 // ================================
-const filterChips = document.querySelectorAll('.filter-chip');
-const projectsGrid = document.querySelector('.projects-grid');
-let allProjects = Array.from(document.querySelectorAll('.project-card'));
+const techToggleBtn  = document.getElementById('techToggleBtn');
+const techToggleText = document.getElementById('techToggleText');
+const techHiddenItems = document.querySelectorAll('.tech-hidden');
 
-function sortProjectsByDate(projects) {
-    return projects.sort((a, b) => {
-        const dateA = new Date(a.getAttribute('data-date'));
-        const dateB = new Date(b.getAttribute('data-date'));
-        return dateB - dateA;
-    });
-}
-
-function filterProjects(filter) {
-    let projectsToShow = allProjects;
-
-    if (filter !== 'all') {
-        projectsToShow = allProjects.filter(card =>
-            card.getAttribute('data-category').includes(filter)
-        );
-    }
-
-    projectsToShow = sortProjectsByDate([...projectsToShow]);
-    const recentProjects = projectsToShow.slice(0, 6);
-
-    allProjects.forEach(card => {
-        card.classList.add('fade-out');
-    });
-
-    setTimeout(() => {
-        projectsGrid.innerHTML = '';
-
-        recentProjects.forEach((card, index) => {
-            card.classList.remove('fade-out', 'hidden');
-            card.classList.add('fade-in');
-            projectsGrid.appendChild(card);
-            card.style.animationDelay = `${index * 0.1}s`;
-
-            setTimeout(() => {
-                card.classList.remove('fade-in');
-                card.style.animationDelay = '';
-            }, 500 + (index * 100));
-        });
-    }, 300);
-}
-
-window.addEventListener('load', () => {
-    if (projectsGrid) filterProjects('all');
-});
-
-filterChips.forEach(chip => {
-    chip.addEventListener('click', function () {
-        const filter = this.getAttribute('data-filter');
-        filterChips.forEach(c => c.classList.remove('active'));
-        this.classList.add('active');
-        filterProjects(filter);
+techToggleBtn?.addEventListener('click', () => {
+    const isExpanded = techToggleBtn.classList.toggle('expanded');
+    techToggleText.textContent = isExpanded ? 'See Less' : 'See More';
+    techHiddenItems.forEach(item => {
+        item.style.display = isExpanded ? 'block' : 'none';
     });
 });
 
 // ================================
 // Consolidated Real-Time Clock
-// ================================
-// This function updates both the footer clock and contact page clock
-// using the timezone configured at the top of this file (MY_TIMEZONE)
-//
-// The displayed time will ALWAYS be in YOUR timezone (MY_TIMEZONE),
-// regardless of where the visitor is browsing from.
+// Replaces two separate setInterval calls (updatePhilippinesTime + updateCurrentTime)
+// Updates footer clock (#timeText) and contact page clock (#currentTime) in one tick
 // ================================
 function updateClocks() {
-    // Use the timezone configured at the top of this file
-    const TZ = MY_TIMEZONE;
+    const TZ = 'Asia/Manila';
 
-    // Create formatters for different time displays
     const timeFormatter = new Intl.DateTimeFormat('en-US', {
-        timeZone: TZ, 
-        hour: '2-digit', 
-        minute: '2-digit', 
-        second: '2-digit', 
-        hour12: true
+        timeZone: TZ, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: true
     });
     const shortFormatter = new Intl.DateTimeFormat('en-US', {
-        timeZone: TZ, 
-        hour: '2-digit', 
-        minute: '2-digit', 
-        hour12: true
+        timeZone: TZ, hour: '2-digit', minute: '2-digit', hour12: true
     });
     const hourFormatter = new Intl.DateTimeFormat('en-US', {
-        timeZone: TZ, 
-        hour: 'numeric', 
-        hour12: false
+        timeZone: TZ, hour: 'numeric', hour12: false
     });
 
-    const now = new Date();
+    const now  = new Date();
     const hour = parseInt(hourFormatter.format(now));
     const isDay = hour >= 6 && hour < 18;
 
@@ -513,27 +554,27 @@ function updateClocks() {
     if (timeText) {
         timeText.textContent = `It's currently ${shortFormatter.format(now)} in Mark's city`;
 
-        const timeIcon = document.getElementById('timeIcon');
-        const sunIcons = document.querySelectorAll('.sun-icon');
+        const timeIcon  = document.getElementById('timeIcon');
+        const sunIcons  = document.querySelectorAll('.sun-icon');
         const moonIcons = document.querySelectorAll('.moon-icon');
 
         timeIcon?.classList.toggle('night', !isDay);
-        sunIcons.forEach(el => el.style.display = isDay ? '' : 'none');
+        sunIcons.forEach(el  => el.style.display = isDay ? '' : 'none');
         moonIcons.forEach(el => el.style.display = isDay ? 'none' : '');
     }
 
     // — Contact page timezone clock (#currentTime) —
-    const currentTime = document.getElementById('currentTime');
-    const timezoneIcon = document.getElementById('timezoneIcon');
+    const currentTime   = document.getElementById('currentTime');
+    const timezoneIcon  = document.getElementById('timezoneIcon');
     if (currentTime) {
         try {
             currentTime.textContent = timeFormatter.format(now);
 
             if (timezoneIcon) {
-                if (hour >= 5 && hour < 12) timezoneIcon.textContent = '🌅';
+                if      (hour >= 5  && hour < 12) timezoneIcon.textContent = '🌅';
                 else if (hour >= 12 && hour < 17) timezoneIcon.textContent = '☀️';
                 else if (hour >= 17 && hour < 20) timezoneIcon.textContent = '🌇';
-                else timezoneIcon.textContent = '🌙';
+                else                              timezoneIcon.textContent = '🌙';
             }
         } catch (err) {
             // Silently fail; clock is non-critical
@@ -556,10 +597,10 @@ if (document.getElementById('timeText') || document.getElementById('currentTime'
 // Contact Form
 // ================================
 const contactForm = document.getElementById('contactForm');
-const submitBtn = document.getElementById('submitBtn');
+const submitBtn   = document.getElementById('submitBtn');
 const formMessage = document.getElementById('formMessage');
 const messageText = document.getElementById('messageText');
-const charCount = document.getElementById('charCount');
+const charCount   = document.getElementById('charCount');
 const messageInput = document.getElementById('message');
 
 if (messageInput && charCount) {
@@ -578,7 +619,7 @@ document.querySelectorAll('.input-icon').forEach(container => {
     const input = container.querySelector('input, textarea');
     if (input) {
         input.addEventListener('focus', () => container.classList.add('focused'));
-        input.addEventListener('blur', () => container.classList.remove('focused'));
+        input.addEventListener('blur',  () => container.classList.remove('focused'));
     }
 });
 
@@ -632,7 +673,7 @@ document.querySelectorAll('.social-link-card').forEach(card => {
         });
         const rect = card.getBoundingClientRect();
         ripple.style.left = (e.clientX - rect.left - 10) + 'px';
-        ripple.style.top = (e.clientY - rect.top - 10) + 'px';
+        ripple.style.top  = (e.clientY - rect.top  - 10) + 'px';
         card.style.position = 'relative';
         card.appendChild(ripple);
         setTimeout(() => ripple.remove(), 600);
