@@ -596,70 +596,70 @@ if (document.getElementById('timeText') || document.getElementById('currentTime'
 // ================================
 // Contact Form
 // ================================
-const contactForm = document.getElementById('contactForm');
-const submitBtn   = document.getElementById('submitBtn');
-const formMessage = document.getElementById('formMessage');
-const messageText = document.getElementById('messageText');
-const charCount   = document.getElementById('charCount');
-const messageInput = document.getElementById('message');
+// const contactForm = document.getElementById('contactForm');
+// const submitBtn   = document.getElementById('submitBtn');
+// const formMessage = document.getElementById('formMessage');
+// const messageText = document.getElementById('messageText');
+// const charCount   = document.getElementById('charCount');
+// const messageInput = document.getElementById('message');
 
-if (messageInput && charCount) {
-    messageInput.addEventListener('input', () => {
-        const count = messageInput.value.length;
-        charCount.textContent = count;
-        charCount.style.color =
-            count > 950 ? '#EF4444' :
-            count > 800 ? '#F59E0B' :
-            'var(--gray-500)';
-    });
-}
+// if (messageInput && charCount) {
+//     messageInput.addEventListener('input', () => {
+//         const count = messageInput.value.length;
+//         charCount.textContent = count;
+//         charCount.style.color =
+//             count > 950 ? '#EF4444' :
+//             count > 800 ? '#F59E0B' :
+//             'var(--gray-500)';
+//     });
+// }
 
-// Input focus effects
-document.querySelectorAll('.input-icon').forEach(container => {
-    const input = container.querySelector('input, textarea');
-    if (input) {
-        input.addEventListener('focus', () => container.classList.add('focused'));
-        input.addEventListener('blur',  () => container.classList.remove('focused'));
-    }
-});
+// // Input focus effects
+// document.querySelectorAll('.input-icon').forEach(container => {
+//     const input = container.querySelector('input, textarea');
+//     if (input) {
+//         input.addEventListener('focus', () => container.classList.add('focused'));
+//         input.addEventListener('blur',  () => container.classList.remove('focused'));
+//     }
+// });
 
-if (contactForm) {
-    contactForm.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        submitBtn.classList.add('loading');
-        submitBtn.disabled = true;
-        formMessage.classList.remove('show');
+// if (contactForm) {
+//     contactForm.addEventListener('submit', async (e) => {
+//         e.preventDefault();
+//         submitBtn.classList.add('loading');
+//         submitBtn.disabled = true;
+//         formMessage.classList.remove('show');
 
-        try {
-            const [response] = await Promise.all([
-                fetch(contactForm.action, {
-                    method: 'POST',
-                    body: new FormData(contactForm),
-                    headers: { 'Accept': 'application/json' }
-                }),
-                new Promise(resolve => setTimeout(resolve, 1000)) // min UX delay
-            ]);
+//         try {
+//             const [response] = await Promise.all([
+//                 fetch(contactForm.action, {
+//                     method: 'POST',
+//                     body: new FormData(contactForm),
+//                     headers: { 'Accept': 'application/json' }
+//                 }),
+//                 new Promise(resolve => setTimeout(resolve, 1000)) // min UX delay
+//             ]);
 
-            if (response.ok) {
-                formMessage.classList.remove('error');
-                formMessage.classList.add('success', 'show');
-                messageText.textContent = '✨ Message sent successfully! I\'ll get back to you soon.';
-                contactForm.reset();
-                if (charCount) charCount.textContent = '0';
-                setTimeout(() => formMessage.classList.remove('show'), 5000);
-            } else {
-                throw new Error('Submission failed');
-            }
-        } catch {
-            formMessage.classList.remove('success');
-            formMessage.classList.add('error', 'show');
-            messageText.textContent = '❌ Oops! Something went wrong. Please try again.';
-        } finally {
-            submitBtn.classList.remove('loading');
-            submitBtn.disabled = false;
-        }
-    });
-}
+//             if (response.ok) {
+//                 formMessage.classList.remove('error');
+//                 formMessage.classList.add('success', 'show');
+//                 messageText.textContent = '✨ Message sent successfully! I\'ll get back to you soon.';
+//                 contactForm.reset();
+//                 if (charCount) charCount.textContent = '0';
+//                 setTimeout(() => formMessage.classList.remove('show'), 5000);
+//             } else {
+//                 throw new Error('Submission failed');
+//             }
+//         } catch {
+//             formMessage.classList.remove('success');
+//             formMessage.classList.add('error', 'show');
+//             messageText.textContent = '❌ Oops! Something went wrong. Please try again.';
+//         } finally {
+//             submitBtn.classList.remove('loading');
+//             submitBtn.disabled = false;
+//         }
+//     });
+// }
 
 // Ripple effect on social cards
 document.querySelectorAll('.social-link-card').forEach(card => {
