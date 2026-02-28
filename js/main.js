@@ -626,22 +626,9 @@ document.querySelectorAll('.input-icon').forEach(container => {
 if (contactForm) {
     contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
-
-        // ── hCaptcha guard ──────────────────────────────────────
-        // Web3Forms script injects a hidden textarea[name="h-captcha-response"]
-        // once the visitor completes the widget. Block submission if it's empty.
-        const hCaptchaResponse = contactForm.querySelector('textarea[name="h-captcha-response"]')?.value ?? '';
-        if (!hCaptchaResponse) {
-            formMessage.classList.remove('success', 'show');
-            formMessage.classList.add('error', 'show');
-            messageText.textContent = '⚠️ Please complete the CAPTCHA verification before sending.';
-            return;
-        }
-        // ────────────────────────────────────────────────────────
-
         submitBtn.classList.add('loading');
         submitBtn.disabled = true;
-        formMessage.classList.remove('show', 'success', 'error');
+        formMessage.classList.remove('show');
 
         try {
             const [response] = await Promise.all([
@@ -653,31 +640,20 @@ if (contactForm) {
                 new Promise(resolve => setTimeout(resolve, 1000)) // min UX delay
             ]);
 
-            // Safely parse JSON — non-JSON error responses won't crash the handler
-            let data = {};
-            const contentType = response.headers.get('Content-Type') || '';
-            if (contentType.includes('application/json')) {
-                try { data = await response.json(); } catch { /* malformed JSON — ignore */ }
-            }
-
             if (response.ok) {
                 formMessage.classList.remove('error');
                 formMessage.classList.add('success', 'show');
                 messageText.textContent = '✨ Message sent successfully! I\'ll get back to you soon.';
                 contactForm.reset();
                 if (charCount) charCount.textContent = '0';
-                // Reset hCaptcha widget so it's ready for a new submission
-                if (window.hcaptcha) window.hcaptcha.reset();
                 setTimeout(() => formMessage.classList.remove('show'), 5000);
             } else {
-                throw new Error(data.message || 'Submission failed');
+                throw new Error('Submission failed');
             }
-        } catch (err) {
+        } catch {
             formMessage.classList.remove('success');
             formMessage.classList.add('error', 'show');
-            messageText.textContent = `❌ ${err.message || 'Oops! Something went wrong. Please try again.'}`;
-            // Reset hCaptcha on failure too so the user can retry
-            if (window.hcaptcha) window.hcaptcha.reset();
+            messageText.textContent = '❌ Oops! Something went wrong. Please try again.';
         } finally {
             submitBtn.classList.remove('loading');
             submitBtn.disabled = false;
