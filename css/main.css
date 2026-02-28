@@ -625,7 +625,7 @@ body.loader-active {
     display: flex;
     align-items: center;
     padding-top: 80px;
-    
+    overflow: hidden;
 }
 
 .hero-background {
@@ -759,6 +759,7 @@ body.loader-active {
     display: flex;
     align-items: center;
     justify-content: center;
+    overflow: hidden;
 }
 
 .hero-image-container {
