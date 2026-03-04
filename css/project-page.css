@@ -815,6 +815,12 @@ body.loader-active {
     display: block;
 }
 
+.hero-image-container iframe.hero-image {
+    width: 100%;
+    height: 500px; /* adjust this value to your liking */
+    display: block;
+}
+
 /* ================================
    Project Meta Info
    ================================ */
