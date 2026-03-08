@@ -4,22 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Work - Mark Christian Labucca</title>
-    <meta name="description"
-        content="Portfolio of UI/UX design, graphic design, and front-end development projects by Mark Christian Labucca.">
-    <meta property="og:title" content="Work — Mark Christian Labucca">
-    <meta property="og:description"
-        content="Browse UI/UX, branding, and development projects by Mark Christian Labucca.">
-    <meta property="og:image" content="https:/www.mclabucca.site/img/og-preview.jpg">
-    <meta property="og:url" content="https://www.mclabucca.site/work.html">
+    <title>Project - Mark Christian Labucca</title>
+    <meta name="description" content="A detailed case study of a graphic design project by Mark Christian Labucca.">
+    <meta property="og:title" content="Project — Mark Christian Labucca">
+    <meta property="og:description" content="Graphic design case study by Mark Christian Labucca.">
+    <meta property="og:image" content="https://yourdomain.com/img/og-preview.jpg">
+    <meta property="og:url" content="https://yourdomain.com/project-page_-_graphics.html">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary_large_image">
-    <link rel="icon" type="image/png" sizes="32x32" href="img/mc-favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="../img/mc-favicon.png">
     <!-- PERF: preconnect BEFORE stylesheet so the connection warms up immediately -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://fonts.googleapis.com">
-    <link rel="stylesheet" href="css/work.css">
+    <link rel="stylesheet" href="../css/project-page.css">
     <!-- [PERF] Non-render-blocking font load: preload + async swap avoids blocking FCP/LCP -->
     <link rel="preload" as="style"
         href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
@@ -42,7 +40,7 @@
     <!-- Navigation -->
     <nav class="navbar" id="navbar">
         <div class="container nav-container">
-            <a href="index.html" class="logo">
+            <a href="../index.html" class="logo">
                 <span style="color: #6840B8;">■</span> mc.labucca
             </a>
             <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
@@ -51,10 +49,10 @@
                 <span></span>
             </button>
             <ul class="nav-menu" id="navMenu">
-                <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="work.html" class="nav-link active">Work</a></li>
-                <li><a href="about.html" class="nav-link">About</a></li>
-                <li><a href="contact.html" class="nav-link">Contact</a></li>
+                <li><a href="../index.html" class="nav-link">Home</a></li>
+                <li><a href="../work.html" class="nav-link">Work</a></li>
+                <li><a href="../about.html" class="nav-link active">About</a></li>
+                <li><a href="../contact.html" class="nav-link">Contact</a></li>
                 <li><a href="https://forms.gle/L765wte7jkqrr68J8" target="_blank" rel="noopener noreferrer"
                         class="nav-cta">
                         <span>Start a Project</span>
@@ -66,103 +64,236 @@
             </ul>
         </div>
     </nav>
-    <br><br>
-    <!-- Featured Works Section -->
-    <section class="projects" id="projects">
-        <div class="grid-background"></div>
-        <div class="container">
-            <div class="section-header">
-                <span class="section-label">My Work</span>
-                <h2 class="section-title">The Collection</h2>
-                <p class="section-description">Take a look at what I’ve been up to, and feel free to filter them to see
-                    exactly what you’re looking for.</p>
-            </div>
 
-            <!-- Search Bar -->
-            <div class="project-search-container">
-                <div class="search-bar">
-                    <svg class="search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <circle cx="9" cy="9" r="6" stroke="currentColor" stroke-width="2" />
-                        <path d="M14 14l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                    </svg>
-                    <input type="text" id="projectSearch" class="search-input"
-                        placeholder="Search projects by name or keyword..." autocomplete="off">
-                    <button class="search-clear" id="searchClear" style="display: none;">
-                        <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                            <path d="M12 4L4 12M4 4l8 8" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" />
-                        </svg>
-                    </button>
+    <!-- Breadcrumbs & Project Header -->
+    <section class="project-intro">
+        <div class="container">
+            <!-- Breadcrumbs -->
+            <nav class="breadcrumb" aria-label="Breadcrumb">
+                <a href="../work.html" class="breadcrumb-link">Work</a>
+                <svg width="16" height="16" viewBox="0 0 16 16" fill="none" class="breadcrumb-separator">
+                    <path d="M6 12l4-4-4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round" />
+                </svg>
+                <span class="breadcrumb-current" id="breadcrumbCurrent"></span>
+            </nav>
+
+            <!-- Project Name -->
+            <h1 class="project-name" id="projectName">2025 Social Media Graphics</h1>
+        </div>
+    </section>
+
+    <!-- Hero Image -->
+    <section class="project-hero">
+        <div class="container">
+            <!-- Replace hero image (recommended: 1920x1080px) -->
+            <div class="hero-image-container">
+                <img src="../img/2025-social-media/2025-socmed-hero-image.png" alt="Project Hero Image" class="hero-image">
+                <!-- <video src="../img/2026-02-11 20-00-57.mkv" class="hero-image" autoplay muted loop playsinline></video> -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Project Meta Info -->
+    <section class="project-meta">
+        <div class="container">
+            <div class="meta-grid">
+                <!-- To update each meta item -->
+                <div class="meta-item">
+                    <h3 class="meta-label">Duration</h3>
+                    <p class="meta-value">Jan - Dec 2025</p>
+                </div>
+                <div class="meta-item">
+                    <h3 class="meta-label">Design Type</h3>
+                    <p class="meta-value">Social Media Materials</p>
+                </div>
+                <div class="meta-item">
+                    <h3 class="meta-label">Role</h3>
+                    <p class="meta-value">Graphic Designer</p>
+                </div>
+                <!-- <div class="meta-item">
+                    <h3 class="meta-label">Team</h3>
+                    <p class="meta-value">2 Designers, 3 Developers, 1 PM</p>
+                </div> -->
+                <div class="meta-item">
+                    <h3 class="meta-label">Tools Used</h3>
+                    <p class="meta-value">Figma & Canva </p>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <!-- Project Filters -->
-            <div class="project-filters">
-                <button class="filter-chip active" data-filter="all">
-                    All Projects
-                </button>
+    <!-- Overview -->
+    <section class="project-section">
+        <div class="container">
+            <h2 class="section-title">Overview</h2>
 
-                <button class="filter-chip" data-filter="featured">
-                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                        <path
-                            d="M9 2l2.163 4.382 4.837.705-3.5 3.41.826 4.816L9 13.18l-4.326 2.134.826-4.816-3.5-3.41 4.837-.705L9 2z"
-                            fill="currentColor" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                    Top Picks
-                </button>
-
-                <button class="filter-chip" data-filter="uiux">
-                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                        <rect x="2" y="4" width="6" height="10" rx="1" stroke="currentColor" stroke-width="2" />
-                        <rect x="10" y="4" width="6" height="10" rx="1" stroke="currentColor" stroke-width="2" />
-                    </svg>
-                    UI/UX Design
-                </button>
-                <button class="filter-chip" data-filter="graphics">
-                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                        <rect x="3" y="3" width="12" height="12" rx="2" stroke="currentColor" stroke-width="2" />
-                        <path d="M3 6h12M6 3v12" stroke="currentColor" stroke-width="2" />
-                    </svg>
-                    Graphics Design
-                </button>
-                <button class="filter-chip" data-filter="development">
-                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                        <path d="M5 7l-3 3 3 3M13 7l3 3-3 3M11 4L7 14" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                    Development
-                </button>
-                <button class="filter-chip" data-filter="others">
-                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-                        <circle cx="9" cy="4" r="2" fill="currentColor" />
-                        <circle cx="9" cy="9" r="2" fill="currentColor" />
-                        <circle cx="9" cy="14" r="2" fill="currentColor" />
-                    </svg>
-                    Others
-                </button>
+            <div class="section-content">
+                <p>This is where I keep all the social media graphics I've made throughout 2025. Some were for events,
+                    some for activities, some just to get a message out, but all of them came from real things I was
+                    actually involved in. It's a bit of a visual diary of my year.</p>
             </div>
 
-            <div class="projects-grid">
-                <!-- 
-                ========================================
-                TO MARK PROJECTS AS "TOP PICKS":
-                ========================================
-                Simply add data-featured="true" to any project card you want to feature.
-                
-                Example:
-                <article class="project-card" data-category="development" data-date="2026-01" data-featured="true">
-                
-                When users click "Top Picks", only projects with data-featured="true" will show.
-                You can feature as many or as few projects as you want - just add/remove the attribute.
-                ========================================
-                -->
 
-                <!-- Development Projects -->
+        </div>
+        <div class="container">
+            <!-- <h2 class="section-title">Design Challenge</h2>
+
+            <div class="section-content">
+                <p>Social media moves fast, so the biggest challenge was always figuring out how to make something stop
+                    the scroll. I had to work with different themes, deadlines, and sometimes very specific guidelines —
+                    and still make it look good. Every graphic taught me something a little different.</p>
+            </div> -->
+
+            <!-- Project Tags -->
+            <div class="projectpage-tags">
+                <span class="tag">Promotional Graphics</span>
+                <span class="tag">Social Media Design</span>
+                <span class="tag">Marketing Materials</span>
+                <span class="tag">Facebook</span>
+                <span class="tag">Visual Communication</span>
+                <span class="tag">Graphic Design</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- My Design Process -->
+    <section class="project-section bg-light">
+        <div class="container">
+            <h2 class="section-title">My Work</h2>
+            <p class="section-subtitle">A look at everything I designed in 2025</p>
+
+            <!-- 
+                ============================================================
+                TO ADD IMAGES:
+                1. Copy the <img> tag below
+                2. Paste it as many times as you need
+                3. Update the src and alt text
+                4. Images will automatically be full-width and responsive
+                
+                Recommended image size: 1200px width minimum
+                ============================================================
+            -->
+            <div class="process-images grid-3">
+                <img src="../img/2025-social-media/socmed-graphics-6.jpg" alt="socmed-graphics" class="process-image">
+                <img src="../img/2025-social-media/socmed-graphics-7.jpg" alt="socmed-graphics" class="process-image">
+                <img src="../img/2025-social-media/socmed-graphics-8.jpg" alt="socmed-graphics" class="process-image">
+            </div>
+            <div class="process-images grid-5">
+                <img src="../img/2025-social-media/socmed-graphics-1.jpg" alt="socmed-graphics" class="process-image">
+                <img src="../img/2025-social-media/socmed-graphics-2.jpg" alt="socmed-graphics" class="process-image">
+                <img src="../img/2025-social-media/socmed-graphics-3.jpg" alt="socmed-graphics" class="process-image">
+                <img src="../img/2025-social-media/socmed-graphics-4.jpg" alt="socmed-graphics" class="process-image">
+                <img src="../img/2025-social-media/socmed-graphics-5.jpg" alt="socmed-graphics" class="process-image">
+            </div>
+            <div class="process-images grid-2">
+                <img src="../img/2025-social-media/socmed-graphics-9.png" alt="socmed-graphics" class="process-image">
+                <img src="../img/2025-social-media/socmed-graphics-10.png" alt="socmed-graphics" class="process-image">
+            </div>
+            <div class="process-images grid-4">
+                <img src="../img/2025-social-media/socmed-graphics-11.jpg" alt="socmed-graphics" class="process-image">
+                <img src="../img/2025-social-media/socmed-graphics-12.jpg" alt="socmed-graphics" class="process-image">
+                <img src="../img/2025-social-media/socmed-graphics-13.jpg" alt="socmed-graphics" class="process-image">
+                <img src="../img/2025-social-media/socmed-graphics-14.jpg" alt="socmed-graphics" class="process-image">
+            </div>
+            <div class="process-images grid-3">
+                <img src="../img/2025-social-media/socmed-graphics-15.png" alt="socmed-graphics" class="process-image">
+                <img src="../img/2025-social-media/socmed-graphics-16.png" alt="socmed-graphics" class="process-image">
+                <img src="../img/2025-social-media/socmed-graphics-17.png" alt="socmed-graphics" class="process-image">
+            </div>
+            <div class="process-images grid-4">
+                <img src="../img/2025-social-media/socmed-graphics-18.png" alt="socmed-graphics" class="process-image">
+                <img src="../img/2025-social-media/socmed-graphics-19.png" alt="socmed-graphics" class="process-image">
+                <img src="../img/2025-social-media/socmed-graphics-20.png" alt="socmed-graphics" class="process-image">
+                <img src="../img/2025-social-media/socmed-graphics-21.png" alt="socmed-graphics" class="process-image">
+            </div>
+        </div>
+    </section>
+
+    <!-- Conclusion -->
+    <section class="project-section">
+        <div class="container">
+            <h2 class="section-title">Conclusion</h2>
+
+            <div class="section-content">
+                <p>Looking at these all together, I can see how much I've grown, not just in skill, but in how I think
+                    about design. These weren't just random graphics; they were real things made for real people, and
+                    that made all the difference.</p>
+            </div>
+
+            <!-- Results/Metrics (optional) -->
+            <div class="results-grid">
+                <div class="result-card">
+                    <div class="result-number">20+</div>
+                    <p class="result-label">Social Media Materials Posted</p>
+                </div>
+                <div class="result-card">
+                    <div class="result-number">5</div>
+                    <p class="result-label">Facebook Pages Handled</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Client Feedback -->
+    <!-- <section class="project-section bg-light">
+        <div class="container">
+            <h2 class="section-title">Client Feedback</h2> -->
+
+    <!-- CUSTOMIZATION: Add client testimonial -->
+    <!-- <div class="feedback-container">
+                <div class="feedback-quote">
+                    <svg class="quote-icon" width="48" height="48" viewBox="0 0 48 48" fill="none">
+                        <path d="M21.6 28.8V38.4H12V28.8C12 23.28 16.08 18.72 21.6 16.8V12C13.68 14.16 7.2 21.36 7.2 28.8V43.2H26.4V28.8H21.6ZM40.8 28.8V43.2H36V28.8C36 23.28 40.08 18.72 45.6 16.8V12C37.68 14.16 31.2 21.36 31.2 28.8V43.2H40.8V28.8Z" fill="currentColor" opacity="0.1"/>
+                    </svg> -->
+    <!-- CUSTOMIZATION: Update testimonial text -->
+    <!-- <p class="feedback-text">"Working with Mark was an absolute pleasure. His attention to detail and user-centered approach resulted in a product that exceeded our expectations. The final design not only looked beautiful but also significantly improved our user engagement metrics."</p>
+                </div>
+                <div class="feedback-author"> -->
+    <!-- CUSTOMIZATION: Update client info -->
+    <!-- <p class="author-name">Jane Doe</p>
+                    <p class="author-role">CEO, Company Name</p>
+                </div>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Slide Deck Button -->
+    <!-- <section class="project-section">
+        <div class="container">
+            <div class="slide-deck-cta">
+                <h3 class="cta-title">Want to see more details?</h3>
+                <p class="cta-description">View the complete presentation deck for an in-depth look at the entire design process, research findings, and final deliverables.</p> -->
+    <!-- CUSTOMIZATION: Update link to your slide deck (Google Slides, Figma, PDF, etc.) -->
+    <!-- <a href="#" target="_blank" rel="noopener noreferrer" class="btn btn-primary btn-large">
+                    View Full Slide Deck
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M4 10h12m0 0l-5-5m5 5l-5 5" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section> -->
+
+    <!-- Suggested Projects -->
+    <section class="project-section bg-light">
+        <div class="container">
+            <h2 class="section-title">Must-See Projects</h2>
+            <p class="section-subtitle">A curated selection of my top projects.</p>
+
+            <!-- 
+                ============================================================
+                CUSTOMIZATION: Update project cards
+                Add/remove cards as needed (recommended: 2-3 projects)
+                ============================================================
+            -->
+            <div class="suggested-grid">
+                <!-- Project Card 1 -->
                 <article class="project-card" data-category="development uiux" data-date="2025-06" data-featured="true">
                     <div class="project-image">
-                        <img src="img/iram/iram-thumbnail-image.png"
-                            alt="Iram II Elementary School Student Transcript and Academic Records System"
+                        <img src="../img/iram/iram-thumbnail-image.png"
+                            alt="Iram II Elementary School - Student Transcript and Academic Records System"
                             class="project-thumbnail" loading="lazy">
                         <div class="project-date">
                             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -185,7 +316,7 @@
                             Directed design and development of a desktop system for a local public elementary
                             school, improving access to 200+ student records and replacing manual processes.
                         </p>
-                        <a href="projects/iram-desktop-system.html" class="project-link">
+                        <a href="iram-desktop-system.html" class="project-link">
                             View Project
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                 <path d="M3 8h10m0 0l-4-4m4 4l-4 4" stroke="currentColor" stroke-width="1.5"
@@ -197,7 +328,7 @@
 
                 <article class="project-card" data-category="development uiux" data-date="2025-08" data-featured="true">
                     <div class="project-image">
-                        <img src="img/pmgsc/pmgsc-thumbnail-image.png" alt="Planate Management Group Support Center"
+                        <img src="../img/pmgsc/pmgsc-thumbnail-image.png" alt="Planate Management Group Support Center"
                             class="project-thumbnail" loading="lazy">
                         <div class="project-date">
                             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -206,7 +337,7 @@
                                 <path d="M2 6h10M5 1v2M9 1v2" stroke="currentColor" stroke-width="1.5"
                                     stroke-linecap="round" />
                             </svg>
-                            Jun - Aug 2025
+                            Apr - Nov 2025
                         </div>
                     </div>
                     <div class="project-content">
@@ -219,7 +350,7 @@
                             Led overall UX design and supported frontend development for an in-house ticketing
                             system of Planate Management Group, streamlining support requests across 500+ employees.
                         </p>
-                        <a href="projects/pmgsc-ticketing-system.html" class="project-link">
+                        <a href="pmgsc-ticketing-system.html" class="project-link">
                             View Project
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                 <path d="M3 8h10m0 0l-4-4m4 4l-4 4" stroke="currentColor" stroke-width="1.5"
@@ -231,7 +362,7 @@
 
                 <article class="project-card" data-category="uiux development" data-date="2024-12" data-featured="true">
                     <div class="project-image">
-                        <img src="img/lunastalaan/lt-thumbnail-image.png" alt="Lunas Talaan Mobile Application"
+                        <img src="../img/lunastalaan/lt-thumbnail-image.png" alt="Lunas Talaan Mobile Application"
                             class="project-thumbnail" loading="lazy">
                         <div class="project-date">
                             <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
@@ -254,7 +385,7 @@
                             manage their medications, reaching 1,000+ installs across APKPure and
                             Amazon Appstore.
                         </p>
-                        <a href="projects/lunas-talaan.html" class="project-link">
+                        <a href="lunas-talaan.html" class="project-link">
                             View Project
                             <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
                                 <path d="M3 8h10m0 0l-4-4m4 4l-4 4" stroke="currentColor" stroke-width="1.5"
@@ -263,246 +394,49 @@
                         </a>
                     </div>
                 </article>
-
-                <article class="project-card" data-category="development" data-date="2025-02">
-                    <div class="project-image">
-                        <img src="img/a&m/a&m-thumbnail-image.png" alt="A&M Electric Contractors Inc. Website"
-                            class="project-thumbnail" loading="lazy">
-                        <div class="project-date">
-                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                                <rect x="2" y="3" width="10" height="9" rx="1" stroke="currentColor"
-                                    stroke-width="1.5" />
-                                <path d="M2 6h10M5 1v2M9 1v2" stroke="currentColor" stroke-width="1.5"
-                                    stroke-linecap="round" />
-                            </svg>
-                            Feb 2025
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <div class="project-tags">
-                            <span class="project-tag">Frontend Developer</span>
-                            <span class="project-tag">Visual Designer</span>
-                        </div>
-                        <h3 class="project-title">A&M Electric Contractors Inc. Website</h3>
-                        <p class="project-description">
-                            Co-developed a company website for an international client, translating their brand
-                            guidelines into a clear and engaging web experience.
-                        </p>
-                        <a href="projects/am-website.html" class="project-link">
-                            View Project
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M3 8h10m0 0l-4-4m4 4l-4 4" stroke="currentColor" stroke-width="1.5"
-                                    stroke-linecap="round" />
-                            </svg>
-                        </a>
-                    </div>
-                </article>
-
-                <article class="project-card" data-category="development" data-date="2023-05">
-                    <div class="project-image">
-                        <img src="img/pleyn/pleyn-thumbnail-image.png" alt="Pleyn Clothing" class="project-thumbnail"
-                            loading="lazy">
-                        <div class="project-date">
-                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                                <rect x="2" y="3" width="10" height="9" rx="1" stroke="currentColor"
-                                    stroke-width="1.5" />
-                                <path d="M2 6h10M5 1v2M9 1v2" stroke="currentColor" stroke-width="1.5"
-                                    stroke-linecap="round" />
-                            </svg>
-                            May 2023
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <div class="project-tags">
-                            <span class="project-tag">Designer & Developer</span>
-                        </div>
-                        <h3 class="project-title">PLEYN Clothing</h3>
-                        <p class="project-description">
-                            Created a responsive e-commerce website prototype for a startup, helping the client
-                            visualize how their online shop could look and function.
-                        </p>
-                        <a href="projects/pleyn-clothing.html" class="project-link">
-                            View Project
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M3 8h10m0 0l-4-4m4 4l-4 4" stroke="currentColor" stroke-width="1.5"
-                                    stroke-linecap="round" />
-                            </svg>
-                        </a>
-                    </div>
-                </article>
-
-                <!-- <article class="project-card" data-category="uiux" data-date="2025-12">
-                    <div class="project-image">
-                        <img src="img/projects/project-6.jpg" alt="PMGSEAC Website Redesign" class="project-thumbnail"
-                            loading="lazy">
-                        <div class="project-date">
-                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                                <rect x="2" y="3" width="10" height="9" rx="1" stroke="currentColor"
-                                    stroke-width="1.5" />
-                                <path d="M2 6h10M5 1v2M9 1v2" stroke="currentColor" stroke-width="1.5"
-                                    stroke-linecap="round" />
-                            </svg>
-                            Dec 2025
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <div class="project-tags">
-                            <span class="project-tag">UI/UX Designer</span>
-                        </div>
-                        <h3 class="project-title">PMGSEAC Website Redesign</h3>
-                        <p class="project-description">
-                            Refreshed the PMGSEAC website with UI/UX improvements, standardized design elements, and
-                            stronger alignment with company branding.
-                        </p>
-                        <a href="pmgseac-redesign.html" class="project-link">
-                            View Project
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M3 8h10m0 0l-4-4m4 4l-4 4" stroke="currentColor" stroke-width="1.5"
-                                    stroke-linecap="round" />
-                            </svg>
-                        </a>
-                    </div>
-                </article> -->
-
-                <!-- <article class="project-card" data-category="graphics" data-date="2025-12">
-                    <div class="project-image">
-                        <img src="img/projects/project-6.jpg" alt="" class="project-thumbnail" loading="lazy">
-                        <div class="project-date">
-                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                                <rect x="2" y="3" width="10" height="9" rx="1" stroke="currentColor"
-                                    stroke-width="1.5" />
-                                <path d="M2 6h10M5 1v2M9 1v2" stroke="currentColor" stroke-width="1.5"
-                                    stroke-linecap="round" />
-                            </svg>
-                            Dec 2025
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <div class="project-tags">
-                            <span class="project-tag">UI/UX Designer</span>
-                        </div>
-                        <h3 class="project-title">Graphics Sample</h3>
-                        <p class="project-description">
-                            Refreshed the PMGSEAC website with UI/UX improvements, standardized design elements, and
-                            stronger alignment with company branding.
-                        </p>
-                        <a href="project-page - graphics.html" class="project-link">
-                            View Project
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M3 8h10m0 0l-4-4m4 4l-4 4" stroke="currentColor" stroke-width="1.5"
-                                    stroke-linecap="round" />
-                            </svg>
-                        </a>
-                    </div>
-                </article> -->
-
-                <article class="project-card" data-category="others" data-date="2025-02">
-                    <div class="project-image">
-                        <img src="img/techfest/techfest-thumbnail-image.png" alt="" class="project-thumbnail"
-                            loading="lazy">
-                        <div class="project-date">
-                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                                <rect x="2" y="3" width="10" height="9" rx="1" stroke="currentColor"
-                                    stroke-width="1.5" />
-                                <path d="M2 6h10M5 1v2M9 1v2" stroke="currentColor" stroke-width="1.5"
-                                    stroke-linecap="round" />
-                            </svg>
-                            Feb 2025
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <div class="project-tags">
-                            <span class="project-tag">Head Coordinator</span>
-                            <span class="project-tag">Marketing Head</span>
-                        </div>
-                        <h3 class="project-title">Gordon College CCS Tech Fest 2025</h3>
-                        <p class="project-description">
-                            Served as Head Coordinator for GC CCS Tech Fest 2025, overseeing the full planning and
-                            execution of Gordon College's College of Computer Studies annual fundraising tech event.
-                        </p>
-                        <a href="projects/techfest2025.html" class="project-link">
-                            View Project
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M3 8h10m0 0l-4-4m4 4l-4 4" stroke="currentColor" stroke-width="1.5"
-                                    stroke-linecap="round" />
-                            </svg>
-                        </a>
-                    </div>
-                </article>
-
-                <article class="project-card" data-category="graphics" data-date="2025 01">
-                    <div class="project-image">
-                        <img src="img/2025-social-media/2025-socmed-thumbnail-image.png" alt="" class="project-thumbnail"
-                            loading="lazy">
-                        <div class="project-date">
-                            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-                                <rect x="2" y="3" width="10" height="9" rx="1" stroke="currentColor"
-                                    stroke-width="1.5" />
-                                <path d="M2 6h10M5 1v2M9 1v2" stroke="currentColor" stroke-width="1.5"
-                                    stroke-linecap="round" />
-                            </svg>
-                            Jan - Dec 2025
-                        </div>
-                    </div>
-                    <div class="project-content">
-                        <div class="project-tags">
-                            <span class="project-tag">Graphic Designer</span>
-                        </div>
-                        <h3 class="project-title">2025 Social Media Graphics</h3>
-                        <p class="project-description">
-                            A collection of social media graphics I made throughout 2025, spanning
-                            events, activities, and everything in between.
-                        </p>
-                        <a href="projects/social-media-graphics-2025.html" class="project-link">
-                            View Project
-                            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                                <path d="M3 8h10m0 0l-4-4m4 4l-4 4" stroke="currentColor" stroke-width="1.5"
-                                    stroke-linecap="round" />
-                            </svg>
-                        </a>
-                    </div>
-                </article>
-
             </div>
 
-            <!-- No Results Message -->
-            <div class="no-results" id="noResults" style="display: none;">
-                <svg width="64" height="64" viewBox="0 0 64 64" fill="none">
-                    <circle cx="32" cy="32" r="30" stroke="currentColor" stroke-width="2" />
-                    <path d="M32 18v14l10 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                        stroke-linejoin="round" />
-                </svg>
-                <h3>Good work takes time.</h3>
-                <p>New projects are in progress, please check back soon.</p>
-            </div>
-
-            <!-- Pagination Controls -->
-            <div class="pagination" id="pagination" style="display: none;">
-                <button class="pagination-btn pagination-prev" id="prevPage" aria-label="Previous page">
+            <!-- Back to Work Link -->
+            <div class="section-footer">
+                <a href="../work.html" class="btn btn-outline">
+                    View All Projects
                     <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M12 16l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
+                        <path d="M4 10h12m0 0l-5-5m5 5l-5 5" stroke="currentColor" stroke-width="2"
+                            stroke-linecap="round" />
                     </svg>
-                    Previous
-                </button>
-                <div class="pagination-numbers" id="paginationNumbers">
-                    <!-- Page numbers will be inserted here by JavaScript -->
-                </div>
-                <button class="pagination-btn pagination-next" id="nextPage" aria-label="Next page">
-                    Next
-                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-                        <path d="M8 4l6 6-6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                </button>
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Section Divider -->
-    <div class="section-divider">
-        <div class="divider-line"></div>
-    </div>
+    <!-- CTA Section -->
+    <section class="about-cta-section">
+        <div class="container">
+            <div class="about-cta-content">
+                <h2>Let's Work Together</h2>
+                <p>Whether you need design, development perspective, project management, or someone who can do a little
+                    bit of everything—let's talk.</p>
+                <div class="cta-buttons">
+                    <a href="https://forms.gle/L765wte7jkqrr68J8" target="_blank" rel="noopener noreferrer"
+                        class="btn btn-primary">
+                        Start a Project
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M4 10h12m0 0l-5-5m5 5l-5 5" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                    </a>
+                    <a href="../assets/Mark-Christian-Labucca-CV.pdf" target="_blank" rel="noopener noreferrer"
+                        class="btn btn-secondary">
+                        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+                            <path d="M10 13V3m0 10l-4-4m4 4l4-4M3 17h14" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        Download CV
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
 
     <!-- Contact Section -->
     <section class="contact" id="contact">
@@ -633,7 +567,7 @@
         <div class="container">
             <div class="footer-content">
                 <div class="footer-left">
-                    <a href="index.html" class="footer-logo">
+                    <a href="../index.html" class="footer-logo">
                         <span style="color: #6840B8;">■</span> mc.labucca
                     </a>
                     <p class="footer-text">Designing with the discipline of a developer and the empathy of a user.</p>
@@ -656,10 +590,10 @@
                     <div class="footer-column">
                         <h4>Navigation</h4>
                         <ul>
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="work.html">Work</a></li>
-                            <li><a href="about.html">About</a></li>
-                            <li><a href="contact.html">Contact</a></li>
+                            <li><a href="../index.html">Home</a></li>
+                            <li><a href="../work.html">Work</a></li>
+                            <li><a href="../about.html">About</a></li>
+                            <li><a href="../contact.html">Contact</a></li>
                         </ul>
                     </div>
                     <div class="footer-column">
@@ -675,6 +609,8 @@
             <div class="footer-bottom">
                 <p>&copy; 2026 Mark Labucca. All rights reserved.</p>
                 <div class="footer-bottom-links">
+                    <!-- <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a> -->
                 </div>
             </div>
         </div>
@@ -697,7 +633,7 @@
         </svg>
     </button>
 
-    <script src="js/work.js" defer></script>
+    <script src="../js/project-page.js" defer></script>
 </body>
 
 </html>

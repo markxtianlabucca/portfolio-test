@@ -968,11 +968,15 @@ body.loader-active {
 /* ================================
    Design Process - Scalable Images
    ================================ */
+/* ================================
+   Design Process Images - Grid System
+   ================================ */
 .process-images {
-    margin-top: 1rem;
+    margin-top: 2rem;
 }
 
-.process-image {
+/* Default: Full-width stacked images (no grid) */
+.process-images:not([class*="grid-"]) .process-image {
     width: 100%;
     height: auto;
     display: block;
@@ -981,8 +985,105 @@ body.loader-active {
     box-shadow: var(--shadow-lg);
 }
 
-.process-image:last-child {
+.process-images:not([class*="grid-"]) .process-image:last-child {
     margin-bottom: 0;
+}
+
+/* Grid Layouts */
+.process-images[class*="grid-"] {
+    display: grid;
+    gap: 1.5rem;
+}
+
+.process-images[class*="grid-"] .process-image {
+    width: 100%;
+    aspect-ratio: 1 / 1; /* Square images */
+    object-fit: cover;
+    border-radius: 0.75rem;
+    box-shadow: var(--shadow-lg);
+}
+
+/* 1 Column */
+.process-images.grid-1 {
+    grid-template-columns: 1fr;
+}
+
+/* 2 Columns */
+.process-images.grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+/* 3 Columns */
+.process-images.grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+/* 4 Columns */
+.process-images.grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+/* 5 Columns */
+.process-images.grid-5 {
+    grid-template-columns: repeat(5, 1fr);
+}
+
+/* ================================
+   Grid Responsive Breakpoints
+   ================================ */
+
+/* Tablet (768px and below) */
+@media (max-width: 768px) {
+    .process-images[class*="grid-"] {
+        gap: 1rem;
+    }
+    
+    /* 5 columns → 3 columns */
+    .process-images.grid-5 {
+        grid-template-columns: repeat(3, 1fr);
+    }
+    
+    /* 4 columns → 2 columns */
+    .process-images.grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* 3 columns → 2 columns */
+    .process-images.grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* 2 columns stays 2 columns */
+    /* 1 column stays 1 column */
+}
+
+/* Mobile (480px and below) */
+@media (max-width: 480px) {
+    .process-images[class*="grid-"] {
+        gap: 0.75rem;
+    }
+    
+    /* 5 columns → 2 columns */
+    .process-images.grid-5 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* 4 columns → 2 columns */
+    .process-images.grid-4 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* 3 columns → 2 columns */
+    .process-images.grid-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    /* 2 columns → 1 column */
+    .process-images.grid-2 {
+        grid-template-columns: 1fr;
+    }
+    
+    /* 1 column stays 1 column */
 }
 
 /* ================================
